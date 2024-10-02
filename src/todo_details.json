@@ -1,5 +1,206 @@
 [
     {
-        "name": "Ravini"
+        "name": "Ravini",
+        "password": "123",
+        "account_date": "2024-10-02",
+        "account_time": "01:15:01",
+        "projects": [
+            {
+                "project_name": "project abc",
+                "project_description": "project abc description",
+                "project_start_date": "2024-09-15",
+                "project_end_date": "2026-04-10",
+                "project_priority": "high",
+                "project_is_completed": "no",
+                "project_completed_date": "",
+                "todos": [
+                    {
+                        "todo_name": "todo1",
+                        "todo_description": "todo1 description",
+                        "todo_start_date": "2024-10-01",
+                        "todo_end_date": "2025-12-10",
+                        "todo_start_time": "10:11:12",
+                        "todo_end_time": "16:00:00",
+                        "todo_priority": "medium",
+                        "todo_is_completed": "no",
+                        "todo_completed_date": "",
+                        "todo_completed_time": ""
+                    },
+                    {
+                        "todo_name": "todo2",
+                        "todo_description": "todo2 description",
+                        "todo_start_date": "2024-10-11",
+                        "todo_end_date": "2025-12-16",
+                        "todo_start_time": "10:11:12",
+                        "todo_end_time": "16:00:00",
+                        "todo_priority": "medium",
+                        "todo_is_completed": "no",
+                        "todo_completed_date": "",
+                        "todo_completed_time": ""
+                    },
+                    {
+                        "todo_name": "todo3",
+                        "todo_description": "todo3 description",
+                        "todo_start_date": "2024-10-05",
+                        "todo_end_date": "2025-12-05",
+                        "todo_start_time": "10:11:00",
+                        "todo_end_time": "16:00:00",
+                        "todo_priority": "high",
+                        "todo_is_completed": "no",
+                        "todo_completed_date": "",
+                        "todo_completed_time": ""
+                    }
+                ] 
+            },
+            {
+                "project_name": "project pqr",
+                "project_description": "project pqr description",
+                "project_start_date": "2025-09-15",
+                "project_end_date": "2027-04-10",
+                "project_priority": "high",
+                "project_is_completed": "no",
+                "project_completed_date": "",
+                "todos": [
+                    {
+                        "todo_name": "todo1",
+                        "todo_description": "todo1 description",
+                        "todo_start_date": "2025-10-01",
+                        "todo_end_date": "2026-12-10",
+                        "todo_start_time": "10:11:12",
+                        "todo_end_time": "16:00:00",
+                        "todo_priority": "medium",
+                        "todo_is_completed": "no",
+                        "todo_completed_date": "",
+                        "todo_completed_time": ""
+                    },
+                    {
+                        "todo_name": "todo2",
+                        "todo_description": "todo2 description",
+                        "todo_start_date": "2025-10-11",
+                        "todo_end_date": "2026-12-16",
+                        "todo_start_time": "10:11:12",
+                        "todo_end_time": "16:00:00",
+                        "todo_priority": "medium",
+                        "todo_is_completed": "no",
+                        "todo_completed_date": "",
+                        "todo_completed_time": ""
+                    },
+                    {
+                        "todo_name": "todo3",
+                        "todo_description": "todo3 description",
+                        "todo_start_date": "2025-10-05",
+                        "todo_end_date": "2026-12-05",
+                        "todo_start_time": "10:11:00",
+                        "todo_end_time": "16:00:00",
+                        "todo_priority": "high",
+                        "todo_is_completed": "no",
+                        "todo_completed_date": "",
+                        "todo_completed_time": ""
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Ravini",
+        "password": "123",
+        "account_date": "2024-10-02",
+        "account_time": "01:15:01",
+        "projects": [
+            {
+                "project_name": "project abc",
+                "project_description": "project abc description",
+                "project_start_date": "2024-09-15",
+                "project_end_date": "2026-04-10",
+                "project_priority": "high",
+                "project_is_completed": "no",
+                "project_completed_date": "",
+                "todos": [
+                    {
+                        "todo_name": "todo1",
+                        "todo_description": "todo1 description",
+                        "todo_start_date": "2024-10-01",
+                        "todo_end_date": "2025-12-10",
+                        "todo_start_time": "10:11:12",
+                        "todo_end_time": "16:00:00",
+                        "todo_priority": "medium",
+                        "todo_is_completed": "no",
+                        "todo_completed_date": "",
+                        "todo_completed_time": ""
+                    },
+                    {
+                        "todo_name": "todo2",
+                        "todo_description": "todo2 description",
+                        "todo_start_date": "2024-10-11",
+                        "todo_end_date": "2025-12-16",
+                        "todo_start_time": "10:11:12",
+                        "todo_end_time": "16:00:00",
+                        "todo_priority": "medium",
+                        "todo_is_completed": "no",
+                        "todo_completed_date": "",
+                        "todo_completed_time": ""
+                    },
+                    {
+                        "todo_name": "todo3",
+                        "todo_description": "todo3 description",
+                        "todo_start_date": "2024-10-05",
+                        "todo_end_date": "2025-12-05",
+                        "todo_start_time": "10:11:00",
+                        "todo_end_time": "16:00:00",
+                        "todo_priority": "high",
+                        "todo_is_completed": "no",
+                        "todo_completed_date": "",
+                        "todo_completed_time": ""
+                    }
+                ] 
+            },
+            {
+                "project_name": "project pqr",
+                "project_description": "project pqr description",
+                "project_start_date": "2025-09-15",
+                "project_end_date": "2027-04-10",
+                "project_priority": "high",
+                "project_is_completed": "no",
+                "project_completed_date": "",
+                "todos": [
+                    {
+                        "todo_name": "todo1",
+                        "todo_description": "todo1 description",
+                        "todo_start_date": "2025-10-01",
+                        "todo_end_date": "2026-12-10",
+                        "todo_start_time": "10:11:12",
+                        "todo_end_time": "16:00:00",
+                        "todo_priority": "medium",
+                        "todo_is_completed": "no",
+                        "todo_completed_date": "",
+                        "todo_completed_time": ""
+                    },
+                    {
+                        "todo_name": "todo2",
+                        "todo_description": "todo2 description",
+                        "todo_start_date": "2025-10-11",
+                        "todo_end_date": "2026-12-16",
+                        "todo_start_time": "10:11:12",
+                        "todo_end_time": "16:00:00",
+                        "todo_priority": "medium",
+                        "todo_is_completed": "no",
+                        "todo_completed_date": "",
+                        "todo_completed_time": ""
+                    },
+                    {
+                        "todo_name": "todo3",
+                        "todo_description": "todo3 description",
+                        "todo_start_date": "2025-10-05",
+                        "todo_end_date": "2026-12-05",
+                        "todo_start_time": "10:11:00",
+                        "todo_end_time": "16:00:00",
+                        "todo_priority": "high",
+                        "todo_is_completed": "no",
+                        "todo_completed_date": "",
+                        "todo_completed_time": ""
+                    }
+                ]
+            }
+        ]
     }
 ]
