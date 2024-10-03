@@ -1,5 +1,7 @@
 const json = require('./todo_details.json');
 
+// let user = {};
+
 //this function is to check user name availability
 function check_user_availability(username){
     for(let entry of json){
@@ -27,7 +29,11 @@ function validate_user_login(username, password){
     return -1;
 }
 
-//
+//this function finds the user object from json array and assign this object to the user variable
+function get_user(index){
+    let user = json[index];
+    return {user};
+}
 
 
 // this function is to create a new user object
@@ -53,9 +59,25 @@ function create_user(name, password, date_created, time_created){
     return usr_obj;
 }
 
+//this function is to generate unique code for a project or for a todo
+function generate_code(entry){
+    const date = new Date();
+    const time = date.getTime();
+    let code = "";
+    if(entry.localeCompare("project") === 0){
+        code = "p" + code;
+    }
+    if(entry.localeCompare("todo") === 0){
+        code = "t" + code;
+    }
+    return {code};
+}
+
 // this function is to create a new project
 function create_project(name, description, date_of_start, due_date, priority, is_completed, completed_date){
+    let code = generate_code("project").code;
     let project_obj = {
+        project_code: code,
         project_name: name,
         project_description:description,
         project_start_date: date_of_start,
@@ -78,7 +100,9 @@ function add_todo_to_project(project_obj, todo_obj){
 
 //this function is to create a todo
 function create_todo(name, description, start_date, end_date, start_time, end_time, priority, is_completed, completed_date, completed_time){
+    let code = generate_code("todo").code;
     let todo_obj = {
+        project_code: code,
         todo_name: name,
         todo_description: description,
         todo_start_date: start_date,
