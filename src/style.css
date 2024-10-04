@@ -5,6 +5,11 @@ html,body,#container{
     padding: 0.5rem;
 }
 
+#container{
+    display: flex;
+    flex-direction: column;
+}
+
 header{
     display: flex;
     justify-content: space-between;
@@ -17,4 +22,49 @@ header{
     font-size: xxx-large;
     padding: 1rem;
     letter-spacing: 0.5rem;
+}
+
+#content{
+    display: flex;
+    height: 100%;
+}
+
+.project-section{
+    display: flex;
+    flex-direction: column;
+    background-color: cadetblue;
+    width: 30%;
+    /* height: ; */
+}
+
+#project-list{
+    display: flex;
+    flex-direction: column;
+}
+
+#selected-project-view{
+    display: flex;
+    flex-direction: column;
+    background-color: darkgray;
+    width: 70%;
+}
+
+.prj_title{
+    display: flex;
+}
+
+.todo-info{
+    display: flex;
+    gap: 8rem;
+}
+
+.todo-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+}
+
+.todo-btn{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

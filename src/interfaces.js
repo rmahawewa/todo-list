@@ -6,19 +6,23 @@ let profile_two = `
     <div class="log-out"><div class="user-name"><label id="username"></label></div><button id="logout" class="log-btn">Log out</button></div>
 `;
 
-let content = `
+function create_content(){
+    let content = `
     <div class="project-section">
         <label id="projects-title">Projects</label>
         <button id="add-project">Add new</button>
         <div id="project-list">
-            <label id="project-list">All the projects</label>
+            <label id="project-list">Project list</label>
 
         </div>
     </div>
-    <div class="selected-project-view">
-    
+    <div id="selected-project-view">
+        
     </div>
-`;
+    `;
+
+    return {content};
+}
 
 function btn_project(prj_name, prj_code){
     let btn=`
@@ -62,7 +66,15 @@ function todo_info(total, high_pr_tot, medium_pr_tot, low_pr_tot){
 }
 
 //this is a container to add todos for the selected project
-let todo_container =  `<div class="todo-container"></div>`;
+function todo_container(todos){
+    let todo_container =  `
+        <div class="todo-container"> 
+            `+ todos +`
+        </div>
+    `;
+    return {todo_container};
+}
+
 
 //this function creates a todo card for a specific project
 function create_todo_of_a_project(name, todo_code, priority, project_code){
@@ -70,7 +82,7 @@ function create_todo_of_a_project(name, todo_code, priority, project_code){
     let todo = `
         <div class="todo-card `+ project_code +`|`+ todo_code +` `+ priority +`">
             <label class="todo-title">`+ name +`</label>
-            <label class="todo-priority>`+ v +`</label>
+            <label class="todo-priority">`+ v +`</label>
         </div>
     `;
     return {todo};
@@ -143,3 +155,5 @@ function get_selected_todo(name,description,duedate,priority){
     // do
     return {todo_view};
 }
+
+export{profile_one, profile_two, create_content, btn_project, btn_todo, project_title, todo_info, todo_container, create_todo_of_a_project, add_todo, add_project, get_selected_todo};

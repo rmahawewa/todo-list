@@ -37,38 +37,79 @@ function get_user(index){
 
 
 // this function is to create a new user object
-function create_user(name, password, date_created, time_created){
+function create_user(){
+    const code = generate_code("user").code;
+    const pr_code = generate_code("project").code;
+    const date_created = new Date();
+
     let usr_obj = {
-        name: name,
-        password: password,
+        // name: name,
+        // password: password,
+        user_code: code,
         account_date: date_created,
-        account_time: time_created,
         projects: [
             {
+                project_code: pr_code,
                 project_name: "Default project",
                 project_description: "This is the default project",
-                project_start_date: "2024-09-15",
-                project_end_date: "2026-04-10",
+                project_added_date: date_created,
+                project_end_date: "",
                 project_priority: "medium",
                 project_is_completed: "no",
                 project_completed_date: "",
-                todos: [],
+                todos: [
+                    {
+                        todo_code: "todo123",
+                        todo_title: "todo1",
+                        todo_description: "todo1 description",
+                        todo_added_date: "2024-10-01",
+                        todo_due_date: "2025-12-10",
+                        todo_priority: "medium",
+                        todo_is_completed: "no",
+                        todo_completed_date: "",
+                        todo_completed_time: ""
+                    },
+                    {
+                        todo_code: "todo456",
+                        todo_title: "todo2",
+                        todo_description: "todo2 description",
+                        todo_added_date: "2024-10-11",
+                        todo_due_date: "2025-12-16",
+                        todo_priority: "medium",
+                        todo_is_completed: "no",
+                        todo_completed_date: "",
+                        todo_completed_time: ""
+                    },
+                    {
+                        todo_code: "todo_789",
+                        todo_title: "todo3",
+                        todo_description: "todo3 description",
+                        todo_added_date: "2024-10-05",
+                        todo_due_date: "2025-12-05",
+                        todo_priority: "high",
+                        todo_is_completed: "no",
+                        todo_completed_date: "",
+                        todo_completed_time: ""
+                    }
+                ],
             },
         ],
     };
-    return usr_obj;
+    return {usr_obj};
 }
 
 //this function is to generate unique code for a project or for a todo
 function generate_code(entry){
-    const date = new Date();
-    const time = date.getTime();
+    const miliseconds = Date.now();
     let code = "";
+    if(entry.localeCompare("user") === 0){
+        code = "u" + miliseconds;
+    }
     if(entry.localeCompare("project") === 0){
-        code = "p" + code;
+        code = "p" + miliseconds;
     }
     if(entry.localeCompare("todo") === 0){
-        code = "t" + code;
+        code = "t" + miliseconds;
     }
     return {code};
 }
@@ -77,15 +118,15 @@ function generate_code(entry){
 function create_project(name, description, date_of_start, due_date, priority, is_completed, completed_date){
     let code = generate_code("project").code;
     let project_obj = {
-        project_code: code,
-        project_name: name,
-        project_description:description,
-        project_start_date: date_of_start,
-        project_end_date: due_date,
-        project_priority: priority,
-        project_is_completed: is_completed,
-        project_completed_date: completed_date,
-        todos: [],
+            project_code: code,
+            project_name: name,
+            project_description:description,
+            project_start_date: date_of_start,
+            project_end_date: due_date,
+            project_priority: priority,
+            project_is_completed: is_completed,
+            project_completed_date: completed_date,
+            todos: [],
     };
     // let add_todo = (todo) => {
     //     this.project_obj.todos.push(todo);
@@ -102,7 +143,7 @@ function add_todo_to_project(project_obj, todo_obj){
 function create_todo(name, description, start_date, end_date, start_time, end_time, priority, is_completed, completed_date, completed_time){
     let code = generate_code("todo").code;
     let todo_obj = {
-        project_code: code,
+        todo_code: code,
         todo_name: name,
         todo_description: description,
         todo_start_date: start_date,
@@ -116,3 +157,4 @@ function create_todo(name, description, start_date, end_date, start_time, end_ti
     };
     return todo_obj;
 }
+export {create_user, generate_code, create_project, add_todo_to_project, create_todo};
