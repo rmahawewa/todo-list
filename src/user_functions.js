@@ -66,8 +66,7 @@ function create_user(){
                         todo_due_date: "2025-12-10",
                         todo_priority: "medium",
                         todo_is_completed: "no",
-                        todo_completed_date: "",
-                        todo_completed_time: ""
+                        todo_completed_date: ""
                     },
                     {
                         todo_code: "todo456",
@@ -77,8 +76,7 @@ function create_user(){
                         todo_due_date: "2025-12-16",
                         todo_priority: "medium",
                         todo_is_completed: "no",
-                        todo_completed_date: "",
-                        todo_completed_time: ""
+                        todo_completed_date: ""
                     },
                     {
                         todo_code: "todo_789",
@@ -88,8 +86,7 @@ function create_user(){
                         todo_due_date: "2025-12-05",
                         todo_priority: "high",
                         todo_is_completed: "no",
-                        todo_completed_date: "",
-                        todo_completed_time: ""
+                        todo_completed_date: ""
                     }
                 ],
             },

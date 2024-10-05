@@ -59,7 +59,7 @@ function todo_info(total, high_pr_tot, medium_pr_tot, low_pr_tot){
             <div class="todo-infos" >Total number of todos: `+ total +`</div>
             <div class="todo-infos red" >`+ high_pr_tot +` of high priority</div>
             <div class="todo-infos green" >`+ medium_pr_tot +` of medium priority</div>
-            <div class="todo-infos orange" >`+ low_pr_tot +` of low priority</div>
+            <div class="todo-infos slate" >`+ low_pr_tot +` of low priority</div>
         </div>
     `;
     return {view};
@@ -74,7 +74,6 @@ function todo_container(todos){
     `;
     return {todo_container};
 }
-
 
 //this function creates a todo card for a specific project
 function create_todo_of_a_project(name, todo_code, priority, project_code){
@@ -119,7 +118,7 @@ let add_project = `
     </div>
 `;
 
-function get_selected_todo(name,description,duedate,priority){
+function get_selected_todo(name,description,duedate,priority,project_code,todo_code){
     let h = "";
     let m = "";
     let l = "";
@@ -129,12 +128,15 @@ function get_selected_todo(name,description,duedate,priority){
     let todo_view = `
     <div ciass="view" id="todo-view">
         <div class="actions">
-            <button class="view-todo-btn" id="mark-complete" >Done</button>
+            <button class="view-todo-btn" id="mark-complete" >Mark as complete</button>
             <button class="view-todo-btn" id="todo-edit-btn" >Edit</button>
             <button class="view-todo-btn" id="todo-close-btn">Close</button>
+            <button class="view-todo-btn" id="todo-remove-btn">Remove this todo</button>
         </div>
+        <input type="hidden" id="project-code" value=`+ project_code +`>
+        <input type="hidden" id="todo-code" value=`+ todo_code +`>
         <input type="text" id="edit-todo-name" value="`+ name +`">
-        <textarea id="edit-todo-description">`+ description +`</textarea>
+        <textarea id="edit-todo-description" rows="10">`+ description +`</textarea>
         <div class="due-date>
             <label id="due-date-lbl">Due date</label>
             <input type="date" id="edit-todo-due-date" class="calender todo-calender" value="`+ duedate +`">
