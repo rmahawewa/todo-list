@@ -140,6 +140,10 @@ modal.addEventListener("click", function(e){
         close_modal();
     }
 
+    if(e.target.getAttribute("id") !== null && e.target.getAttribute("id").localeCompare("todo-cancel") === 0){
+        close_modal();
+    }
+
 });
 
 function view_projects(){

@@ -94,16 +94,31 @@ function create_todo_of_a_project(name, todo_code, priority, project_code){
     return {todo};
 }
 
+function get_date_in_calender_format(){
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+
+    if(Number(day) < 10){ day = "0" + day; }
+    if(Number(month) < 10){ month = "0" + month; }
+
+    const formatted_date = year + "-" + month + "-" + day;
+
+    return {formatted_date};
+}
+
 function add_new_todo(project_code){
+    let date = get_date_in_calender_format().formatted_date;
     let add_todo = `
     <div class="todo" id="add-todo">
         <h3>Add new todo</h3>
         <input type="hidden" id="prj-code-add-todo" value=`+ project_code +`>
-        <input type="text" id="add-todo-name" placeholder="Todo name">
-        <textarea id="add-todo-description" placeholder="Todo description" rows="10" ></textarea>
+        <input type="text" id="add-todo-name" placeholder="Todo name" required>
+        <textarea id="add-todo-description" placeholder="Todo description" rows="10" required></textarea>
         <div class="due-date>
             <label id="due-date-lbl">Due date</label>
-            <input type="date" id="todo-due-date" class="calender todo-calender">
+            <input type="date" id="todo-due-date" class="calender todo-calender" value="`+ date +`" required>
         </div>
         <div class="div-priority>
             <label id="priority-lbl>Priority</label>
