@@ -42,11 +42,18 @@ function btn_todo(todo_name, todo_code, priority){
 }
 
 //this function is to make the dom element for project title
-function project_title(title, date_of_start){
+function project_title(code, title, date_of_start, priority, description){
     let project = `
         <div class="prj_title>
-            <label id="prj-name-lbl">Project: `+ title +`</label>
+            <label id="prj-name-lbl">Project: `+ title +`</label> 
+            <button id="add-new-todo" class=`+ code +`>Add new todo</button>      
+        </div>
+        <div>
             <label id="date-created-lbl">Date created: `+ date_of_start +`</label>
+            <label id"prj-prty">Priority: `+ priority +`</label>
+        </div>
+        <div>
+            <label id="prj-desc">Description: `+ description +`</label>
         </div>
     `;
     return {project};
@@ -87,10 +94,13 @@ function create_todo_of_a_project(name, todo_code, priority, project_code){
     return {todo};
 }
 
-let add_todo = `
+function add_new_todo(project_code){
+    let add_todo = `
     <div class="todo" id="add-todo">
+        <h3>Add new todo</h3>
+        <input type="hidden" id="prj-code-add-todo" value=`+ project_code +`>
         <input type="text" id="add-todo-name" placeholder="Todo name">
-        <textarea id="add-todo-description" placeholder="Todo description"></textarea>
+        <textarea id="add-todo-description" placeholder="Todo description" rows="10" ></textarea>
         <div class="due-date>
             <label id="due-date-lbl">Due date</label>
             <input type="date" id="todo-due-date" class="calender todo-calender">
@@ -98,23 +108,45 @@ let add_todo = `
         <div class="div-priority>
             <label id="priority-lbl>Priority</label>
             <div class="priority-radio">
-                <input type="radio" id="rd-h" name="todo-priority" value="high">
+                <input type="radio" id="rd-h" name="add-todo-priority" value="high" checked>
                 <label>High</label>
-                <input type="radio" id="rd-m" name="todo-priority" value="medium">
+                <input type="radio" id="rd-m" name="add-todo-priority" value="medium">
                 <label>Medium</label>
-                <input type="radio" id="rd-l" name="todo-priority" value="low">
+                <input type="radio" id="rd-l" name="add-todo-priority" value="low">
                 <label>Low</label>
             </div>
-        </div>   
-        <button id="todo-submit" class="submit-btn">OK</button>     
+        </div> 
+        <div>
+            <button id="todo-submit" class="submit-btn">OK</button>   
+            <button id="todo-cancel" class="submit-btn">Cancel</button>
+        </div>             
     </div>
-`;
+    `;
+    return {add_todo};
+}
+
+
 
 let add_project = `
-    <div class="project" id="add-project">
-        <input type="text" id="add-project-name" placeholder="Project name">
-        <textarea id="add-project-description" placeholder="Project description"></textarea>
-        <button id="project-submit" class="submit-btn">OK</button>
+    <div class="project" id="add-project-mdl">
+        <h3>Add new Project</h3>
+        <input type="text" id="add-project-name" placeholder="Project name" required>
+        <textarea id="add-project-description" placeholder="Project description" rows="10" required></textarea>
+        <div class="div-priority>
+            <label id="priority-lbl>Priority</label>
+            <div class="priority-radio">
+                <input type="radio" id="rd-h" name="proj-priority" value="high" checked>
+                <label>High</label>
+                <input type="radio" id="rd-m" name="proj-priority" value="medium">
+                <label>Medium</label>
+                <input type="radio" id="rd-l" name="proj-priority" value="low">
+                <label>Low</label>
+            </div>
+        </div>
+        <div id="btns">
+            <button id="project-submit" class="submit-btn">OK</button>
+            <button id="project-cancel" class="submit-btn">Cancel</button>
+        </div>
     </div>
 `;
 
@@ -135,8 +167,8 @@ function get_selected_todo(name,description,duedate,priority,project_code,todo_c
         </div>
         <input type="hidden" id="project-code" value=`+ project_code +`>
         <input type="hidden" id="todo-code" value=`+ todo_code +`>
-        <input type="text" id="edit-todo-name" value="`+ name +`">
-        <textarea id="edit-todo-description" rows="10">`+ description +`</textarea>
+        <input type="text" id="edit-todo-name" value="`+ name +`" required>
+        <textarea id="edit-todo-description" rows="10" required>`+ description +`</textarea>
         <div class="due-date>
             <label id="due-date-lbl">Due date</label>
             <input type="date" id="edit-todo-due-date" class="calender todo-calender" value="`+ duedate +`">
@@ -158,4 +190,4 @@ function get_selected_todo(name,description,duedate,priority,project_code,todo_c
     return {todo_view};
 }
 
-export{profile_one, profile_two, create_content, btn_project, btn_todo, project_title, todo_info, todo_container, create_todo_of_a_project, add_todo, add_project, get_selected_todo};
+export{profile_one, profile_two, create_content, btn_project, btn_todo, project_title, todo_info, todo_container, create_todo_of_a_project, add_new_todo, add_project, get_selected_todo};

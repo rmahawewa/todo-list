@@ -53,7 +53,6 @@ function create_user(){
                 project_name: "Default project",
                 project_description: "This is the default project",
                 project_added_date: date_created,
-                project_end_date: "",
                 project_priority: "medium",
                 project_is_completed: "no",
                 project_completed_date: "",
@@ -112,14 +111,15 @@ function generate_code(entry){
 }
 
 // this function is to create a new project
-function create_project(name, description, date_of_start, due_date, priority, is_completed, completed_date){
+function create_project(name, description, priority, is_completed, completed_date){
+    const date = new Date();
+    const date_of_start = date.toISOString();
     let code = generate_code("project").code;
     let project_obj = {
             project_code: code,
             project_name: name,
             project_description:description,
-            project_start_date: date_of_start,
-            project_end_date: due_date,
+            project_added_date: date_of_start,
             project_priority: priority,
             project_is_completed: is_completed,
             project_completed_date: completed_date,
@@ -137,21 +137,20 @@ function add_todo_to_project(project_obj, todo_obj){
 }
 
 //this function is to create a todo
-function create_todo(name, description, start_date, end_date, start_time, end_time, priority, is_completed, completed_date, completed_time){
+function create_todo(name, description, end_date, priority, is_completed, completed_date){
+    const date = new Date();
+    const date_of_start = date.toISOString();
     let code = generate_code("todo").code;
     let todo_obj = {
         todo_code: code,
-        todo_name: name,
+        todo_title: name,
         todo_description: description,
-        todo_start_date: start_date,
-        todo_end_date: end_date,
-        todo_start_time: start_time,
-        todo_end_time: end_time,
+        todo_added_date: date_of_start,
+        todo_due_date: end_date,
         todo_priority: priority,
         todo_is_completed: is_completed,
         todo_completed_date: completed_date,
-        todo_completed_time: completed_time,
     };
-    return todo_obj;
+    return {todo_obj};
 }
 export {create_user, generate_code, create_project, add_todo_to_project, create_todo};

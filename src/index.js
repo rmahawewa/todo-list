@@ -6,15 +6,16 @@ import {todo_info} from "./interfaces.js";
 import {todo_container} from "./interfaces.js";
 import {create_todo_of_a_project} from "./interfaces.js";
 import {get_selected_todo} from "./interfaces.js";
+import {add_project} from "./interfaces.js";
+import {add_new_todo} from "./interfaces.js";
+import {create_project} from "./user_functions.js";
+import {create_todo} from "./user_functions.js";
 import "./style.css";
-
-// console.log(JSON.stringify(create_user().usr_obj));
 
 if(localStorage.getItem("todo_user")===null){
     let usr = JSON.stringify(create_user().usr_obj);
     localStorage.setItem("todo_user", usr);
 }
-////////////
 
 let modal = document.querySelector("#modal");
 let create_cont = create_content();
@@ -23,42 +24,18 @@ let cont = document.querySelector("#content");
 cont.innerHTML = major_content;
 let projects_list = document.querySelector("#project-list");
 let project_view = document.querySelector("#selected-project-view");
-//this variable stores the project code of the selecte project
-// const project_code = "";
 
-let user_obj = get_user().user_obj;
-
-    let projects = user_obj.projects;
-    for(const pr of projects){
-        console.log(pr.project_name);
-        let pr_btn = btn_project(pr.project_name, pr.project_code).btn;
-        console.log(pr_btn);
-        projects_list.innerHTML += pr_btn;
-    }
-
+    
+view_projects();
 
 cont.addEventListener("click", function(e){
     if(e.target.getAttribute("class") !== null && e.target.getAttribute("class").toString().localeCompare("project-btn") === 0){
         const project_code = e.target.getAttribute("id").toString();
-        let project = get_selected_project(project_code).prj;
-        let todos = project.todos;
-        let project_todo_info = get_todo_details_for_project(todos);
-        let proj_title = project_title(project.project_name, project.project_added_date).project;
-        let todo_infos = todo_info(project_todo_info.total_todo, project_todo_info.todo_high_prty, project_todo_info.todo_medium_prty, project_todo_info.todo_low_prty).view;
-        let todo_cards = display_project_todos(todos, project_code).todo_collection;
-        console.log(todo_cards);
-        let todo_cntnr = todo_container(todo_cards).todo_container;
-        // todo_cntnr.appendChild(todo_cards);
-
-        project_view.innerHTML = "";
-        project_view.innerHTML += proj_title;
-        project_view.innerHTML += todo_infos;
-        project_view.innerHTML += todo_cntnr;
+        view_selected_project(project_code);
     }
     
     // this code executes when an individual todo card is clicked
     if((e.target.parentNode.getAttribute("class") !== null && e.target.parentNode.getAttribute("class").includes("todo-card")) || (e.target.getAttribute("class") !== null && e.target.getAttribute("class").includes("todo-card"))){
-        console.log("a todo selected");
         let class_words = "";
 
         if(e.target.parentNode.getAttribute("class").includes("todo-card")){
@@ -68,9 +45,7 @@ cont.addEventListener("click", function(e){
         if(e.target.getAttribute("class").includes("todo-card")){
             class_words = e.target.getAttribute("class");
         }
-        console.log(class_words);
         let codes_array = get_todo_codes(class_words).codes_array;
-        console.log(codes_array);
         let project = get_selected_project(codes_array[0]).prj;
         let todo = get_todo_obj(project, codes_array[1]).todo;
         let selected_todo = get_selected_todo(todo.todo_title,todo.todo_description,todo.todo_due_date,todo.todo_priority,codes_array[0],codes_array[1]).todo_view;
@@ -78,46 +53,194 @@ cont.addEventListener("click", function(e){
         modal.setAttribute("style","display: flex;");
     }
 
-    
+    if(e.target.getAttribute("id") !== null && e.target.getAttribute("id").toString().localeCompare("add-project") === 0){
+        modal.innerHTML = add_project;
+        modal.setAttribute("style", "display: flex;");
+    }
+
+    if(e.target.getAttribute("id") !== null && e.target.getAttribute("id").toString().localeCompare("add-new-todo") === 0){
+        const project_code = e.target.getAttribute("class");
+        let add_todo = add_new_todo(project_code).add_todo;
+        modal.innerHTML = add_todo;
+        modal.setAttribute("style", "display: flex;");
+    }
 });
 
 modal.addEventListener("click", function(e){
     if(e.target.getAttribute("id") !== null && e.target.getAttribute("id").localeCompare("mark-complete") === 0){
-        console.log("mark complete");
         const prj_code = document.querySelector("#project-code").value;
         const todo_code = document.querySelector("#todo-code").value;
         mark_todo_as_complete(prj_code, todo_code);
-        console.log(get_user().user_obj);
+        close_modal();
     }
 
     if(e.target.getAttribute("id") !== null && e.target.getAttribute("id").localeCompare("todo-edit-btn") === 0){
-        console.log("todo edit");
+        const prj_code = document.querySelector("#project-code").value;
+        const todo_code = document.querySelector("#todo-code").value;
+
+        const prj_title = document.querySelector("#edit-todo-name").value;
+        const description = document.querySelector("#edit-todo-description").value;
+        const duedate = document.querySelector("#edit-todo-due-date").value;
+        const priority = document.querySelector('input[name=todo-priority]:checked').value;
+
+        edit_selected_todo(prj_code, todo_code, prj_title, description, duedate, priority);
+        view_selected_project(prj_code);
+        close_modal();
     }
 
     if(e.target.getAttribute("id") !== null && e.target.getAttribute("id").localeCompare("todo-close-btn") === 0){
-        console.log("todo close");
+        const prj_code = document.querySelector("#project-code").value;
+        const todo_code = document.querySelector("#todo-code").value;
+        close_modal();
     }
 
     if(e.target.getAttribute("id") !== null && e.target.getAttribute("id").localeCompare("todo-remove-btn") === 0){
-        console.log("todo remove");
+        const prj_code = document.querySelector("#project-code").value;
+        const todo_code = document.querySelector("#todo-code").value;
+        remove_todo(prj_code, todo_code);
+        view_selected_project(prj_code);
+        close_modal();
     }
+    
+    if(e.target.getAttribute("id") !== null && e.target.getAttribute("id").localeCompare("project-submit") === 0){
+        const prj_name = document.querySelector("#add-project-name").value;
+        const description = document.querySelector("#add-project-description").value;
+        const priority = document.querySelector('input[name=proj-priority]:checked').value;
+        const is_completed = "no";
+        const completed_date = "";
+
+        const project_obj = create_project(prj_name, description, priority, is_completed, completed_date).project_obj;
+        const user_obj = get_user().user_obj;
+        user_obj.projects.push(project_obj);
+        console.log(user_obj);
+
+        let usr = JSON.stringify(user_obj);
+        localStorage.setItem("todo_user", usr);
+
+        view_projects();
+        close_modal();
+    }
+    
+    if(e.target.getAttribute("id") !== null && e.target.getAttribute("id").localeCompare("project-cancel") === 0){
+        close_modal();
+    }
+
+    if(e.target.getAttribute("id") !== null && e.target.getAttribute("id").localeCompare("todo-submit") === 0){
+        const project_code = document.querySelector("#prj-code-add-todo").value;
+        const todo_name = document.querySelector("#add-todo-name").value;
+        const todo_description = document.querySelector("#add-todo-description").value;
+        const todo_due_date = document.querySelector("#todo-due-date").value;
+        const priority = document.querySelector('input[name=add-todo-priority]:checked').value;
+        const is_completed = "no";
+        const completed_date = "";
+
+        const todo_object = create_todo(todo_name, todo_description, todo_due_date, priority, is_completed, completed_date).todo_obj;
+        save_new_todo_in_selected_project(project_code, todo_object);
+        view_selected_project(project_code);
+        close_modal();
+    }
+
 });
 
-function mark_todo_as_complete(project_code, todo_code){
-    const date = new Date();
+function view_projects(){
     let user_obj = get_user().user_obj;
+    let projects = user_obj.projects;
+    projects_list.innerHTML = "";
+    
+    for(const pr of projects){
+        let pr_btn = btn_project(pr.project_name, pr.project_code).btn;
+        projects_list.innerHTML += pr_btn;
+    }
+}
 
+function view_selected_project(project_code){
+    let project = get_selected_project(project_code).prj;
+    let todos = project.todos;
+    let project_todo_info = get_todo_details_for_project(todos);
+    let proj_title = project_title(project_code, project.project_name, project.project_added_date, project.project_priority, project.project_description).project;
+    let todo_infos = todo_info(project_todo_info.total_todo, project_todo_info.todo_high_prty, project_todo_info.todo_medium_prty, project_todo_info.todo_low_prty).view;
+    let todo_cards = display_project_todos(todos, project_code).todo_collection;
+    let todo_cntnr = todo_container(todo_cards).todo_container;
+
+    project_view.innerHTML = "";
+    project_view.innerHTML += proj_title;
+    project_view.innerHTML += todo_infos;
+    project_view.innerHTML += todo_cntnr;
+}
+
+function remove_todo(project_code, todo_code){
+    let user_obj = get_user().user_obj;
+    let info = get_project_and_indexs(project_code, todo_code);
+
+    let project_index = info.project_index;
+    let project = info.project;
+
+    let todo_index = info.todo_index;
+    user_obj.projects[project_index].todos.splice(todo_index,1);
+
+    let usr = JSON.stringify(user_obj);
+    localStorage.setItem("todo_user", usr);
+
+    return;
+}
+
+function close_modal(){
+    modal.innerHTML = "";
+    modal.setAttribute("style", "display: none;");
+}
+
+function get_project_and_indexs(project_code, todo_code){
     let project_index = get_selected_project(project_code).count;
     let project = get_selected_project(project_code).prj;
 
     let todo_index = get_todo_obj(project, todo_code).count;
 
-    //this line of code update the selected todo's is-complete as completed
-    // console.log("completed todo index: " + user_obj.projects[project_index].todos[todo_index]);
-    console.log(user_obj.projects[project_index].todos[todo_index]);
+    return {project_index, project, todo_index};
+}
+
+function mark_todo_as_complete(project_code, todo_code){
+    const date = new Date();
+    let user_obj = get_user().user_obj;
+
+    let info = get_project_and_indexs(project_code, todo_code);
+
+    let project_index = info.project_index;
+    let project = info.project;
+
+    let todo_index = info.todo_index;
+
     user_obj.projects[project_index].todos[todo_index].todo_is_completed = "yes";
     user_obj.projects[project_index].todos[todo_index].todo_completed_date = date.toISOString();
-    console.log(user_obj.projects[project_index].todos[todo_index]);
+    let usr = JSON.stringify(user_obj);
+    localStorage.setItem("todo_user", usr);
+
+    return;
+}
+
+function edit_selected_todo(project_code, todo_code, name, description, duedate, priority){
+    let user_obj = get_user().user_obj;
+    let info = get_project_and_indexs(project_code, todo_code);
+    let project_index = info.project_index;
+    let project = info.project;
+    let todo_index = info.todo_index;
+
+    user_obj.projects[project_index].todos[todo_index].todo_title = name;
+    user_obj.projects[project_index].todos[todo_index].todo_description = description;
+    user_obj.projects[project_index].todos[todo_index].todo_due_date = duedate;
+    user_obj.projects[project_index].todos[todo_index].todo_priority = priority;
+
+    let usr = JSON.stringify(user_obj);
+    localStorage.setItem("todo_user", usr);
+
+    return;
+}
+
+function save_new_todo_in_selected_project(prj_code, todo_obj){
+    let user_obj = get_user().user_obj;
+
+    const prj_index = get_selected_project(prj_code).count;
+    user_obj.projects[prj_index].todos.push(todo_obj);
+
     let usr = JSON.stringify(user_obj);
     localStorage.setItem("todo_user", usr);
 
@@ -126,9 +249,7 @@ function mark_todo_as_complete(project_code, todo_code){
 
 function get_user(){
     let user = localStorage.getItem("todo_user");
-    console.log(user);
     let user_obj = JSON.parse(user);
-    console.log(user_obj);
     return {user_obj};
 
 }
@@ -142,8 +263,6 @@ function get_todo_codes(class_words){
 
 function display_project_todos(todos, project_code){
     let todo_collection = "";
-    // console.log("todo container: " + todo_cntnr);
-    // todo_cntnr.innerHTML = "12345";
 
     for(const todo of todos){
         let name = todo.todo_title;
@@ -187,7 +306,6 @@ function get_selected_project(code){
 }
 
 function get_todo_obj(project, td_code){
-    console.log(project);
     let todos = project.todos;
     let todo = {};
     let count = 0;
