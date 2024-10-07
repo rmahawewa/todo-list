@@ -10,6 +10,7 @@ import {add_project} from "./interfaces.js";
 import {add_new_todo} from "./interfaces.js";
 import {create_project} from "./user_functions.js";
 import {create_todo} from "./user_functions.js";
+const { compareAsc } = require("date-fns");
 import "./style.css";
 
 if(localStorage.getItem("todo_user")===null){
@@ -38,11 +39,11 @@ cont.addEventListener("click", function(e){
     if((e.target.parentNode.getAttribute("class") !== null && e.target.parentNode.getAttribute("class").includes("todo-card")) || (e.target.getAttribute("class") !== null && e.target.getAttribute("class").includes("todo-card"))){
         let class_words = "";
 
-        if(e.target.parentNode.getAttribute("class").includes("todo-card")){
+        if(e.target.parentNode.getAttribute("class") !== null && e.target.parentNode.getAttribute("class").includes("todo-card")){
             class_words = e.target.parentNode.getAttribute("class");
         }
 
-        if(e.target.getAttribute("class").includes("todo-card")){
+        if(e.target.getAttribute("class") !== null && e.target.getAttribute("class").includes("todo-card")){
             class_words = e.target.getAttribute("class");
         }
         let codes_array = get_todo_codes(class_words).codes_array;
@@ -63,6 +64,13 @@ cont.addEventListener("click", function(e){
         let add_todo = add_new_todo(project_code).add_todo;
         modal.innerHTML = add_todo;
         modal.setAttribute("style", "display: flex;");
+    }
+
+    if(e.target.getAttribute("class") !== null && e.target.getAttribute("class").toString().localeCompare("project-remove-btn") === 0){
+        const project_code = e.target.getAttribute("name");
+        remove_project(project_code);
+        view_projects();
+
     }
 });
 
@@ -155,6 +163,8 @@ function view_projects(){
         let pr_btn = btn_project(pr.project_name, pr.project_code).btn;
         projects_list.innerHTML += pr_btn;
     }
+
+    document.querySelector("#selected-project-view").innerHTML = "";
 }
 
 function view_selected_project(project_code){
@@ -191,6 +201,15 @@ function remove_todo(project_code, todo_code){
 function close_modal(){
     modal.innerHTML = "";
     modal.setAttribute("style", "display: none;");
+}
+
+function remove_project(code){
+    const project_index = get_selected_project(code).count;
+    let user_obj = get_user().user_obj;
+    user_obj.projects.splice(project_index, 1);
+    let usr = JSON.stringify(user_obj);
+    localStorage.setItem("todo_user", usr);
+    return;
 }
 
 function get_project_and_indexs(project_code, todo_code){
@@ -271,8 +290,10 @@ function display_project_todos(todos, project_code){
     for(const todo of todos){
         let name = todo.todo_title;
         let code = todo.todo_code;
-        let priority = todo.todo_priority;        
-        let card = create_todo_of_a_project(name, code, priority, project_code).todo;
+        let priority = todo.todo_priority; 
+        let duedt = todo.todo_due_date;  
+        let is_complete = todo.todo_is_completed;
+        let card = create_todo_of_a_project(name, code, priority, project_code, duedt, is_complete).todo;
         todo_collection += card;
     }
     return {todo_collection};

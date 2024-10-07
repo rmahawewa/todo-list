@@ -1,3 +1,5 @@
+const { compareAsc } = require("date-fns");
+
 let profile_one = `
     <div class="login-signin"><button id="login" class="log-btn">Login</button><button id="signin" class="log-btn">Sign in</button></div>
 `;
@@ -26,7 +28,10 @@ function create_content(){
 
 function btn_project(prj_name, prj_code){
     let btn=`
-        <button class="project-btn" id=`+ prj_code +`>`+ prj_name +`</button>
+        <div class="project-btn" id=`+ prj_code +`>
+            <label class="project_name_btn">`+ prj_name +`</label>
+            <button class="project-remove-btn" name=`+ prj_code +`>Remove</button>
+        </div>        
     `;
     return {btn};
 }
@@ -83,12 +88,22 @@ function todo_container(todos){
 }
 
 //this function creates a todo card for a specific project
-function create_todo_of_a_project(name, todo_code, priority, project_code){
+function create_todo_of_a_project(name, todo_code, priority, project_code, duedate, is_complete){
+    let today = get_date_in_calender_format().formatted_date;
+    const date_compare = compareAsc(duedate, today);
+    const not_late = "&#9203;";
+    const on_duedate = "&#10069;";
+    const late = "&#10071;";
+    const complete = "&#9989";
+    let symbol = "";
+    symbol = date_compare == -1 ? late : (date_compare == 0 ? on_duedate : (date_compare == 1 ? not_late : ""));
+    symbol = is_complete.localeCompare("yes") === 0 ? complete : symbol;
     let v = priority.localeCompare("high")===0?"h":(priority.localeCompare("medium")===0?"m":"l");
     let todo = `
         <div class="todo-card `+ project_code +`|`+ todo_code +` `+ priority +`">
             <label class="todo-title">`+ name +`</label>
             <label class="todo-priority">`+ v +`</label>
+            <label class="todo-stts" id="symbl">`+ symbol +`</label>
         </div>
     `;
     return {todo};
