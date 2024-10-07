@@ -2,8 +2,10 @@
     --color-hp: rgb(248, 113, 113);
     --color-mp: rgb(74, 222, 128);
     --color-lp: rgb(148, 163, 184);
-    --color-blue: #2563eb;
+    --color-blue: #1e3a8a;
+    --color-ligth-blue: #93c5fd;
     --color-white: white;
+    --color-modal-background: rgb(255, 255, 255, 0.6);
 }
 
 html,body,#container{
@@ -11,25 +13,31 @@ html,body,#container{
     height: 99%;
     margin: 0;
     padding: 0.5rem;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 #container{
     display: flex;
     flex-direction: column;
+    border: 0.5rem solid var(--color-blue);
+    gap: 0.5rem;
+    height: fit-content;
 }
 
 header{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    background-color: deepskyblue;
+    background-color: var(--color-blue);
 }
 
 #logo{
-    color: gold;
+    color: var(--color-white);
     font-size: xxx-large;
+    font-weight: bold;
     padding: 1rem;
     letter-spacing: 0.5rem;
+    display: flex;
 }
 
 #content{
@@ -42,12 +50,39 @@ header{
     flex-direction: column;
     background-color: var(--color-blue);
     width: 30%;
-    /* height: ; */
+    padding: 1rem;
+    height: 49rem;
+}
+
+#projects-title{
+    color: var(--color-white);
+    font-size: larger;
+    font-weight: bolder;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem;
+}
+
+.prj-data-indent{
+    display: flex;
+}
+
+span{
+    display: inline-block;
+    width:7rem;
+}
+
+.add-gap{
+    display: flex;
+    gap:10rem;
 }
 
 #project-list{
     display: flex;
     flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
 }
 
 #selected-project-view{
@@ -55,10 +90,106 @@ header{
     flex-direction: column;
     background-color: var(--color-white);
     width: 70%;
+    padding: 1rem;
+    gap:2rem;
+    font-weight: bold;
+}
+
+.todo-info{
+    border: 0.25rem solid var(--color-blue);
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    border-radius: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--color-blue);
+    margin-top: 4rem;
+}
+
+.red{
+    color: var(--color-hp);
+}
+
+.green{
+    color: var(--color-mp);
+}
+
+.slate{
+    color: var(--color-lp);
 }
 
 .prj_title{
     display: flex;
+}
+
+#project-list-lbl{
+    color: var(--color-white);
+    margin-top: 7rem;
+    font-size: large;
+    font-weight: bold;
+}
+
+.project-btn{
+    color: var(--color-blue);
+    background-color: var(--color-white);
+    font-size: large;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    border: none;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.project-remove-btn{
+    background-color: var(--color-blue);
+    color: var(--color-white);
+    border: none;
+    border-radius: 1rem;
+    font-weight: bold;
+}
+
+#add-project{
+    color: var(--color-blue);
+    background-color: var(--color-white);
+    font-size: large;
+    font-weight: bold;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 1rem;
+}
+
+#proj-descrp{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    color: var(--color-blue);
+}
+
+.prj_title{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+
+#add-new-todo{
+    background-color: var(--color-blue);
+    color: var(--color-white);
+    font-size: large;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    border: none;
+    border-radius: 1rem;
+    font-weight: bold;
 }
 
 .todo-info{
@@ -69,7 +200,8 @@ header{
 .todo-container{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    gap: 0.5rem;
+    gap: 0.5rem;  
+    margin-top: 4rem;
 }
 
 .todo-btn{
@@ -78,9 +210,17 @@ header{
     justify-content: space-between;    
 }
 
-/* .todo-card{
-    background-color: bisque;
-} */
+.todo-card{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    color: var(--color-white);
+    border-radius: 1rem;
+}
 
 .high{
     background-color: var(--color-hp);
@@ -104,7 +244,7 @@ header{
     height: 100%;
     overflow: auto;
     padding-top: 8rem;
-    background-color: rgb(253, 186, 116, 0.6);
+    background-color: var(--color-modal-background);
 }
 
 .view{
@@ -118,29 +258,98 @@ header{
 #todo-view{
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 2rem;
     padding: 3rem;
     background-color: var(--color-blue);
-    height: 30rem;
+    color: var(--color-white);
+    border-radius: 5rem;
+    height: 35rem;
     width: 50rem;
 }
 
 #add-project-mdl{
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 2rem;
     padding: 3rem;
     background-color: var(--color-blue);
-    height: 20rem;
+    color: var(--color-white);
+    border-radius: 5rem;
+    height: 35rem;
     width: 50rem;
 }
 
 #add-todo{
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 2rem;
     padding: 3rem;
     background-color: var(--color-blue);
-    height: 27rem;
+    color: var(--color-white);
+    height: 40rem;
     width: 50rem;
+    border-radius: 5rem;
+}
+
+.actions, #btns{
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap: 1rem;
+}
+
+.view-todo-btn, .submit-btn{
+    color: var(--color-blue);
+    background-color: var(--color-white);
+    border: none;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-weight: bold;
+    border-radius: 1rem;
+}
+
+#edit-todo-name, #edit-todo-description, #edit-todo-due-date, #add-project-name, #add-project-description, #add-todo-name, #add-todo-description, #todo-due-date {
+    border-radius: 1rem;    
+    color: var(--color-blue);
+    padding: 1rem;
+}
+
+#edit-todo-name, #add-project-name, #add-todo-name{
+    font-size: medium;
+}
+
+#edit-todo-description, #add-project-description, #add-todo-description{
+    font-size: larger;
+}
+
+#edit-todo-due-date, #todo-due-date{
+    font-size: larger;
+}
+
+.due-date, .div-priority{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+button:hover{
+    background-color: var(--color-ligth-blue);
+}
+
+.project-btn:hover{
+    background-color: var(--color-ligth-blue);
+}
+
+#add-project:hover{
+    background-color: var(--color-ligth-blue);
+}
+
+.todo-card:hover{
+    background-color: var(--color-ligth-blue);
+}
+
+#add-new-todo:hover{
+    background-color: var(--color-ligth-blue);
 }

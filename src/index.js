@@ -79,6 +79,7 @@ modal.addEventListener("click", function(e){
         const prj_code = document.querySelector("#project-code").value;
         const todo_code = document.querySelector("#todo-code").value;
         mark_todo_as_complete(prj_code, todo_code);
+        view_selected_project(prj_code);
         close_modal();
     }
 
@@ -91,9 +92,11 @@ modal.addEventListener("click", function(e){
         const duedate = document.querySelector("#edit-todo-due-date").value;
         const priority = document.querySelector('input[name=todo-priority]:checked').value;
 
-        edit_selected_todo(prj_code, todo_code, prj_title, description, duedate, priority);
-        view_selected_project(prj_code);
-        close_modal();
+        if(prj_title.localeCompare("")!==0 && description.localeCompare("")!==0 && duedate.localeCompare("")!=0){
+            edit_selected_todo(prj_code, todo_code, prj_title, description, duedate, priority);
+            view_selected_project(prj_code);
+            close_modal();
+        }     
     }
 
     if(e.target.getAttribute("id") !== null && e.target.getAttribute("id").localeCompare("todo-close-btn") === 0){
@@ -117,16 +120,18 @@ modal.addEventListener("click", function(e){
         const is_completed = "no";
         const completed_date = "";
 
-        const project_obj = create_project(prj_name, description, priority, is_completed, completed_date).project_obj;
-        const user_obj = get_user().user_obj;
-        user_obj.projects.push(project_obj);
-        console.log(user_obj);
+        if(prj_name.localeCompare("")!==0 && description.localeCompare("")!==0){
+            const project_obj = create_project(prj_name, description, priority, is_completed, completed_date).project_obj;
+            const user_obj = get_user().user_obj;
+            user_obj.projects.push(project_obj);
+            console.log(user_obj);
 
-        let usr = JSON.stringify(user_obj);
-        localStorage.setItem("todo_user", usr);
+            let usr = JSON.stringify(user_obj);
+            localStorage.setItem("todo_user", usr);
 
-        view_projects();
-        close_modal();
+            view_projects();
+            close_modal();
+        }        
     }
     
     if(e.target.getAttribute("id") !== null && e.target.getAttribute("id").localeCompare("project-cancel") === 0){
@@ -142,10 +147,12 @@ modal.addEventListener("click", function(e){
         const is_completed = "no";
         const completed_date = "";
 
-        const todo_object = create_todo(todo_name, todo_description, todo_due_date, priority, is_completed, completed_date).todo_obj;
-        save_new_todo_in_selected_project(project_code, todo_object);
-        view_selected_project(project_code);
-        close_modal();
+        if(todo_name.localeCompare("")!==0 && todo_description.localeCompare("")!==0 && todo_due_date.localeCompare("")!=0){
+            const todo_object = create_todo(todo_name, todo_description, todo_due_date, priority, is_completed, completed_date).todo_obj;
+            save_new_todo_in_selected_project(project_code, todo_object);
+            view_selected_project(project_code);
+            close_modal();
+        }        
     }
 
     if(e.target.getAttribute("id") !== null && e.target.getAttribute("id").localeCompare("todo-cancel") === 0){
