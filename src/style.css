@@ -5,7 +5,7 @@
     --color-blue: #1e3a8a;
     --color-ligth-blue: #93c5fd;
     --color-white: white;
-    --color-modal-background: rgb(255, 255, 255, 0.6);
+    --color-modal-background: rgb(255, 255, 255, 0.6);    
 }
 
 html,body,#container{
@@ -14,14 +14,17 @@ html,body,#container{
     margin: 0;
     padding: 0.5rem;
     font-family: Arial, Helvetica, sans-serif;
+    /* background-color: var(--color-white); */
+
 }
 
 #container{
     display: flex;
     flex-direction: column;
-    border: 0.5rem solid var(--color-blue);
+    /* border: 0.5rem solid var(--color-blue); */
     gap: 0.5rem;
     height: fit-content;
+    border: 0.5rem solid var(--color-white);
 }
 
 header{
